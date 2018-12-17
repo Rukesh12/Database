@@ -5,6 +5,7 @@
 </head>
 <body>
 <?php
+session_start();
 if(isset($_POST['login']))
 {
 $name=$_POST['name'];
@@ -19,7 +20,11 @@ $rec=mysqli_num_rows($qry);
 //counts the record in the database i.e only one username with same name //should be present(only one username so record=1)
 if($rec==1)
 {
-	header('Location: https://github.com');
+	//Session is called where the login is success
+	$_SESSION['sid']=md5(rand(1,9999));
+	$_SESSION['username']=$name;
+	$_SESSION['logintime']=time();
+	header('Location: dashboard.php');
 }
 else
 {
